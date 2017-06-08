@@ -1,11 +1,9 @@
 # DZRPageMenu
---
 `DZRPageMenu`是一个简单的分页菜单管理工具，可以实现类似网易头条的功能
 
 ![Pod Version](https://img.shields.io/badge/pod-v1.0.1-brightgreen.svg?style=flat) ![Pod License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat) ![Pod Platform](https://img.shields.io/badge/platform-iOS-yellow.svg?style=flat)
 
 ## 目录
---
 * [使用条件](#使用条件)
 * [描述](#描述)
 * [安装](#安装)
@@ -100,5 +98,5 @@ DZRSuperController *superController = [[DZRPageController alloc] initWithFrame:f
 ### 版权
 `DZRPageMenu`是根据`MIT license`条款和条件分发的,本文所有权属于作者。
 
-### 补充说明
+### 个人补充
 `DZRPageMenu`是解读`PageMenu`源码后，作者补充改写的一个小工具，是为了个人的一个项目而设计，目前功能还很简单，待后期完善。

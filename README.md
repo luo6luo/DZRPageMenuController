@@ -30,7 +30,7 @@ iOS8.0及以上设备能够使用
 
 2.在需要创建分页控制器的位置,创建`DZRSuperController`
 
-```Objectivi-C
+```objective-c
 // 创建需要展示的子视图数组
 NSMutableArray * childControllerArr = [NSMutableArray array];
 for (int i = 0; i < 7; i++) {
@@ -75,7 +75,7 @@ DZRSuperController *superController = [[DZRPageController alloc] initWithFrame:f
 
 3.具体的协议方法有2个
 
-```Objective-C
+```objective-c
 /**
  * 分页菜单控制器将要把该下标的子视图控制器加载出来
  *
@@ -85,7 +85,7 @@ DZRSuperController *superController = [[DZRPageController alloc] initWithFrame:f
 - (void)pageMenu:(UIViewController *)pageMenu willMoveTheChildController:(UIViewController *)childController atIndexPage:(NSInteger)indexPage;
 ```
 
-```Objective-C
+```objective-c
 /**
  * 分页菜单控制器已经把该下标的子视图控制器加载出来
  *

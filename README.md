@@ -26,7 +26,7 @@ iOS8.0及以上设备能够使用
 2.如果项目没有使用CocoaPods，则可以直接将`DZRPageMenu`文件直接拖入项目，记得勾选`Copy items if needed`选项
 	
 ### 使用
-1.创建一个父视图控制器，该控制器继承`DZRPageMenu`类，实现`DZRPageMenuDelegate`协议(注意:此处假设父视图控制器为`DZRSuperController`)
+1.创建一个父视图控制器，该控制器继承`DZRPageMenu`类，实现`DZRPageMenuDelegate`协议（注意：此处假设父视图控制器为`DZRSuperController`）
 
 2.在需要创建分页控制器的位置,创建`DZRSuperController`
 

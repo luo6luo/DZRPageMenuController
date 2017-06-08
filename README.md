@@ -1,10 +1,11 @@
-#DZRPageMenu
+# DZRPageMenu
 --
 `DZRPageMenu`是一个简单的分页菜单管理工具，可以实现类似网易头条的功能
 
 ![Pod Version](https://img.shields.io/badge/pod-v1.0.1-brightgreen.svg?style=flat) ![Pod License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat) ![Pod Platform](https://img.shields.io/badge/platform-iOS-yellow.svg?style=flat)
 
-##目录
+## 目录
+--
 * [使用条件](#使用条件)
 * [描述](#描述)
 * [安装](#安装)
@@ -12,12 +13,12 @@
 * [版权](#版权)
 * [个人补充](#个人补充)
 
-###使用条件
+### 使用条件
 iOS8.0及以上设备能够使用
 
-###描述
+### 描述
 
-###安装
+### 安装
 1.使用CocoaPods安装，在`Podfile`文件中写入
 
     pod 'DZRPageMenu'
@@ -26,7 +27,7 @@ iOS8.0及以上设备能够使用
 	pod install
 2.如果项目没有使用CocoaPods，则可以直接将`DZRPageMenu`文件直接拖入项目，记得勾选`Copy items if needed`选项
 	
-###使用
+### 使用
 1.创建一个父视图控制器，该控制器继承`DZRPageMenu`类，实现`DZRPageMenuDelegate`协议(注意:此处假设父视图控制器为`DZRSuperController`)
 
 2.在需要创建分页控制器的位置,创建`DZRSuperController`
@@ -96,8 +97,8 @@ DZRSuperController *superController = [[DZRPageController alloc] initWithFrame:f
 - (void)pageMenu:(UIViewController *)pageMenu didMoveTheChildController:(UIViewController *)childController atIndexPage:(NSInteger)indexPage;
 ```
 
-###版权
+### 版权
 `DZRPageMenu`是根据`MIT license`条款和条件分发的,本文所有权属于作者。
 
-###补充说明
+### 补充说明
 `DZRPageMenu`是解读`PageMenu`源码后，作者补充改写的一个小工具，是为了个人的一个项目而设计，目前功能还很简单，待后期完善。

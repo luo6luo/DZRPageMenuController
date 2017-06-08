@@ -65,6 +65,7 @@
       DZROptionIndicatorNeedToCutTheRoundedCorners: @(YES)
     };
     
+    
     DZRPageController *pageMenuController = [[DZRPageController alloc] initWithFrame:CGRectMake(0, 0, Screen_Width, Screen_Height)
                                                                          controllers:controllersArr
                                                                              options:options];

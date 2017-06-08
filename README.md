@@ -1,7 +1,7 @@
 # DZRPageMenu
 `DZRPageMenu`是一个简单的分页菜单管理工具，可以实现类似网易头条的功能
 
-![Pod Version](https://img.shields.io/badge/pod-v1.0.1-brightgreen.svg?style=flat) ![Pod License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat) ![Pod Platform](https://img.shields.io/badge/platform-iOS-yellow.svg?style=flat)
+![Pod Version](https://img.shields.io/badge/pod-v1.0.2-brightgreen.svg?style=flat) ![Pod License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat) ![Pod Platform](https://img.shields.io/badge/platform-iOS-yellow.svg?style=flat)
 
 ## 目录
 * [使用条件](#使用条件)
@@ -26,7 +26,7 @@ iOS8.0及以上设备能够使用
 2.如果项目没有使用CocoaPods，则可以直接将`DZRPageMenu`文件直接拖入项目，记得勾选`Copy items if needed`选项
 	
 ### 使用
-1.创建一个父视图控制器，该控制器继承`DZRPageMenu`类，实现`DZRPageMenuDelegate`协议（注意：此处假设父视图控制器为`DZRSuperController`）
+1.创建一个父视图控制器，该控制器继承`DZRPageMenu`类（注意：此处假设父视图控制器为`DZRSuperController`）
 
 2.在需要创建分页控制器的位置,创建`DZRSuperController`
 
@@ -73,7 +73,7 @@ DZRSuperController *superController = [[DZRPageController alloc] initWithFrame:f
 [self presentViewController: superController animated:YES completion:nil];
 ```
 
-3.具体的协议方法有2个
+3.具体的协议方法有2个,选择性实现
 
 ```objective-c
 /**

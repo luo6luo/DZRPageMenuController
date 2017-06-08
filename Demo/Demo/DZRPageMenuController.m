@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     DZRScrollDirectionOther
 };
 
-@interface DZRPageMenuController ()<UIScrollViewDelegate>
+@interface DZRPageMenuController ()<UIScrollViewDelegate, DZRPageMenuDelegate>
 
 @property (nonatomic, strong) UIScrollView *menuScrollView;
 @property (nonatomic, strong) UIView * indicatorView;
@@ -83,7 +83,6 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 #pragma mark - Init
@@ -93,6 +92,9 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
                       options:(NSDictionary *)options
 {
     if (self = [super init]) {
+        
+        self.view.backgroundColor = [UIColor whiteColor];
+        self.delegate = self;
         
         // 设置初始默认值
         [self initValue];
@@ -224,7 +226,6 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     
     // 设置初始显示界面
     if (![self.pageMutaleArray containsObject:@(self.currentPage)]) {
-        NSLog(@"启动了");
         [self willMoveContrller:self.currentPage];
         [self.pageMutaleArray addObject:@(self.currentPage)];
         [self didMoveContrller:self.currentPage];
@@ -344,7 +345,6 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     
     [self addChildViewController:childVC];
     [childVC didMoveToParentViewController:self];
-    NSLog(@"%@将要出来",[NSString stringWithFormat:@"%ld",(long)indexPage]);
 }
 
 /**视图正式加载为当前视图*/
@@ -354,13 +354,11 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     if ([self.delegate respondsToSelector:@selector(pageMenu:didMoveTheChildController:atIndexPage:)]) {
         [self.delegate pageMenu:self didMoveTheChildController:childVC atIndexPage:indexPage];
     }
-    NSLog(@"%@已经出来",[NSString stringWithFormat:@"%ld",(long)indexPage]);
 }
 
 /**移除该下标的视图控制器*/
 - (void)removeControllerAtIndex:(NSInteger)indexPage
 {
-    NSLog(@"移除%@",[NSString stringWithFormat:@"%ld",(long)indexPage]);
     UIViewController *childVC = self.controllersArray[indexPage];
     [childVC willMoveToParentViewController:nil];
     [childVC.view removeFromSuperview];
@@ -397,7 +395,6 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     // 标记问题：点击item无效
     UILabel *itemView = (UILabel *)recognizer.view;
     NSInteger indexPage = itemView.tag - 100;
-    NSLog(@"点击了%@",[NSString stringWithFormat:@"%ld",(long)indexPage]);
     
     if (indexPage != self.currentPage) {
         NSInteger smallPage = indexPage < self.currentPage ? indexPage : self.currentPage;

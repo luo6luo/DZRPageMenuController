@@ -10,7 +10,7 @@
 #import "ChildViewController.h"
 #import "DZRPageMenuController.h"
 
-@interface DZRPageController ()<DZRPageMenuDelegate>
+@interface DZRPageController ()
 
 @end
 
@@ -26,7 +26,7 @@
         self.navigationItem.leftBarButtonItem = left;
     }
     
-    self.delegate = self;
+//    self.delegate = self;
 }
 
 - (void)popBack:(UIViewController *)vc

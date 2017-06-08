@@ -10,8 +10,10 @@
 
 @protocol DZRPageMenuDelegate <NSObject>
 
+@optional
+
 /**
- * 分页菜单控制器将要把该下标的子视图控制器移出来
+ * 分页菜单控制器将要把该下标的子视图控制器加载出来
  *
  * @param childController 将要加载的子视图
  * @param indexPage 子视图下标
@@ -32,6 +34,14 @@
 
 @property (nonatomic, weak) id<DZRPageMenuDelegate> delegate;
 
+
+/**
+ * 创建分页控制器
+ *
+ * @param frame 控制器frame
+ * @param controllers 子控制器
+ * @param options 设置控制器的选项
+ */
 - (instancetype)initWithFrame:(CGRect)frame
                   controllers:(NSArray *)controllers
                       options:(NSDictionary *)options;

@@ -96,13 +96,13 @@ DZRSuperController *superController = [[DZRPageController alloc] initWithFrame:f
 - (void)pageMenu:(UIViewController *)pageMenu didMoveTheChildController:(UIViewController *)childController atIndexPage:(NSInteger)indexPage;
 ```
 
-###更新日志
+### 更新日志
 
-####1.0.1 Release(08/06/2017)
+#### 1.0.1 Release(08/06/2017)
 * 项目上传CocoaPods
 * 第一个版本完成
 
-####1.0.2 Release(08/06/2017)
+#### 1.0.2 Release(08/06/2017)
 * 可以直接选择性调用代理方法 
 
 ### 版权

@@ -105,6 +105,9 @@ DZRSuperController *superController = [[DZRPageController alloc] initWithFrame:f
 #### 1.0.2 Release(08/06/2017)
 * 可以直接选择性调用代理方法 
 
+#### 1.1.0 Release(12/06/2017)
+* 修改获取数据源方式
+
 ### 版权
 `DZRPageMenu`是根据`MIT license`条款和条件分发的,本文所有权属于作者。
 

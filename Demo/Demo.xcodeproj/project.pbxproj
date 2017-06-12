@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6F304C5D1EEA889C0056A197 /* DZRPageMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F304C5C1EEA889C0056A197 /* DZRPageMenuController.m */; };
+		6F45092D1EEE3107004827FE /* DZRPageMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F45092C1EEE3107004827FE /* DZRPageMenuController.m */; };
 		6F98944C1EE8E50500A973FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F98944B1EE8E50500A973FC /* main.m */; };
 		6F98944F1EE8E50500A973FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F98944E1EE8E50500A973FC /* AppDelegate.m */; };
 		6F9894551EE8E50500A973FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F9894531EE8E50500A973FC /* Main.storyboard */; };
@@ -18,8 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6F304C5B1EEA889C0056A197 /* DZRPageMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZRPageMenuController.h; sourceTree = "<group>"; };
-		6F304C5C1EEA889C0056A197 /* DZRPageMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZRPageMenuController.m; sourceTree = "<group>"; };
+		6F45092B1EEE3107004827FE /* DZRPageMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZRPageMenuController.h; sourceTree = "<group>"; };
+		6F45092C1EEE3107004827FE /* DZRPageMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZRPageMenuController.m; sourceTree = "<group>"; };
 		6F9894471EE8E50500A973FC /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F98944B1EE8E50500A973FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6F98944D1EE8E50500A973FC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -45,6 +45,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F45092A1EEE3107004827FE /* DZRPageMenuController */ = {
+			isa = PBXGroup;
+			children = (
+				6F45092B1EEE3107004827FE /* DZRPageMenuController.h */,
+				6F45092C1EEE3107004827FE /* DZRPageMenuController.m */,
+			);
+			name = DZRPageMenuController;
+			path = ../../DZRPageMenuController;
+			sourceTree = "<group>";
+		};
 		6F98943E1EE8E50400A973FC = {
 			isa = PBXGroup;
 			children = (
@@ -64,7 +74,7 @@
 		6F9894491EE8E50500A973FC /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				6F9894611EE8E5D000A973FC /* DZRPageMenu */,
+				6F45092A1EEE3107004827FE /* DZRPageMenuController */,
 				6F98944D1EE8E50500A973FC /* AppDelegate.h */,
 				6F98944E1EE8E50500A973FC /* AppDelegate.m */,
 				6F9894651EE8E67E00A973FC /* ChildViewController.h */,
@@ -86,15 +96,6 @@
 				6F98944B1EE8E50500A973FC /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		6F9894611EE8E5D000A973FC /* DZRPageMenu */ = {
-			isa = PBXGroup;
-			children = (
-				6F304C5B1EEA889C0056A197 /* DZRPageMenuController.h */,
-				6F304C5C1EEA889C0056A197 /* DZRPageMenuController.m */,
-			);
-			name = DZRPageMenu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,7 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F98946A1EE8E67E00A973FC /* DZRPageController.m in Sources */,
-				6F304C5D1EEA889C0056A197 /* DZRPageMenuController.m in Sources */,
+				6F45092D1EEE3107004827FE /* DZRPageMenuController.m in Sources */,
 				6F9894691EE8E67E00A973FC /* ChildViewController.m in Sources */,
 				6F98944F1EE8E50500A973FC /* AppDelegate.m in Sources */,
 				6F98944C1EE8E50500A973FC /* main.m in Sources */,

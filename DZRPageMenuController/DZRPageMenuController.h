@@ -40,7 +40,7 @@
 
 @end
 
-@interface DZRPageMenuController : UIViewController
+@interface DZRPageMenuController : UIViewController <DZRPageMenuDelegate, DZRPageMenuDataSource>
 
 // 选项key值
 extern NSString * const DZROptionItemTitleFont;

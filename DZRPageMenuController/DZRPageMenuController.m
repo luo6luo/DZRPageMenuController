@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     DZRScrollDirectionOther
 };
 
-@interface DZRPageMenuController ()<UIScrollViewDelegate, DZRPageMenuDelegate, DZRPageMenuDataSource>
+@interface DZRPageMenuController ()<UIScrollViewDelegate>
     
 @property (nonatomic, weak) id<DZRPageMenuDelegate> delegate;
 @property (nonatomic, weak) id<DZRPageMenuDataSource> dataSource;
@@ -616,6 +616,18 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
             indexInArray++;
         }
     }
+}
+
+#pragma mark - Page menu data source
+
+- (NSDictionary *)setupPageMenuWithOptions
+{
+    return nil;
+}
+
+- (NSArray *)addChildControllersToPageMenu
+{
+    return nil;
 }
 
 @end

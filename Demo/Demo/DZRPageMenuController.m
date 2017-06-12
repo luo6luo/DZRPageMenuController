@@ -39,14 +39,19 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     DZRScrollDirectionOther
 };
 
-@interface DZRPageMenuController ()<UIScrollViewDelegate, DZRPageMenuDelegate>
+@interface DZRPageMenuController ()<UIScrollViewDelegate, DZRPageMenuDelegate, DZRPageMenuDataSource>
+    
+@property (nonatomic, weak) id<DZRPageMenuDelegate> delegate;
+@property (nonatomic, weak) id<DZRPageMenuDataSource> dataSource;
 
 @property (nonatomic, strong) UIScrollView *menuScrollView;
 @property (nonatomic, strong) UIView * indicatorView;
 @property (nonatomic, strong) UIScrollView *controllerScrollView;
 
-@property (nonatomic, strong) NSArray *controllersArray;
+@property (nonatomic, strong) NSDictionary *options;           // 选择项
+@property (nonatomic, strong) NSArray *controllersArray;       // 子视图控制器数组
 @property (nonatomic, strong) NSMutableArray *pageMutaleArray; // 已经加载还在内存中的页面
+@property (nonatomic, strong) NSMutableDictionary *callDataSourceMethodFinish; // 获取数据源完成
 
 @property (nonatomic, assign) CGFloat itemTitleFont;    // 菜单项标题字体大小
 @property (nonatomic, assign) NSInteger pageCount;      // 页面个数
@@ -75,6 +80,7 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
 @property (nonatomic, assign) BOOL isItemsCenter;                         // 菜单项是否居中显示
 @property (nonatomic, assign) BOOL canBounceHorizontal;                   // 是否能够水平滑动超过父视图
 @property (nonatomic, assign) BOOL didIndicatorNeedToCutTheRoundedCorner; // 指示器是否切要切割圆角
+@property (nonatomic, assign) BOOL isloadSubViews;                        // 是否已经加载过视图
 
 @end
 
@@ -87,66 +93,19 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
 
 #pragma mark - Init
 
-- (instancetype)initWithFrame:(CGRect)frame
-                  controllers:(NSArray *)controllers
-                      options:(NSDictionary *)options
+- (instancetype)init
 {
     if (self = [super init]) {
         
         self.view.backgroundColor = [UIColor whiteColor];
         self.delegate = self;
+        self.dataSource = self;
         
         // 设置初始默认值
         [self initValue];
         
-        self.view.frame = frame;
-        self.controllersArray = controllers;
-        self.pageCount = controllers.count;
-        
-        // 设置选项值
-        for (NSString *key in options) {
-            if ([key isEqualToString:DZROptionItemTitleFont]) {
-                self.itemTitleFont = [options[key] floatValue];
-            } else if ([key isEqualToString:DZROptionMenuHeight]) {
-                self.menuHeight = [options[key] floatValue];
-            } else if ([key isEqualToString:DZROptionItemWidth]) {
-                self.itemWidth = [options[key] floatValue];
-            } else if ([key isEqualToString:DZROptionIndicatorWidth]) {
-                self.indicatorWidth = [options[key] floatValue];
-            } else if ([key isEqualToString:DZROptionIndicatorHeight]) {
-                self.indicatorHeight = [options[key] floatValue];
-            } else if ([key isEqualToString:DZROptionLeftRightMargin]) {
-                self.leftRightMargin = [options[key] floatValue];
-            } else if ([key isEqualToString:DZROptionTopBottomMargin]) {
-                self.topBottomMargin = [options[key] floatValue];
-            } else if ([key isEqualToString:DZROptionIndicatorTopToItem]) {
-                self.indicatorTopToItem = [options[key] floatValue];
-            } else if ([key isEqualToString:DZROptionItemsSpace]) {
-                self.itemsSpace = [options[key] floatValue];
-            } else if ([key isEqualToString:DZROptionMenuColor]) {
-                self.menuColor = options[key];
-            } else if ([key isEqualToString:DZROptionControllersScrollViewColor]) {
-                self.controllersScrollViewColor = options[key];
-            } else if ([key isEqualToString:DZROptionSelectorItemTitleColor]) {
-                self.selectorItemTitleColor = options[key];
-            } else if ([key isEqualToString:DZROptionUnselectorItemTitleColor]) {
-                self.unselectorItemTitleColor = options[key];
-            } else if ([key isEqualToString:DZROptionIndicatorColor]) {
-                self.indicatorColor = options[key];
-            } else if ([key isEqualToString:DZROptionItemsCenter]) {
-                self.isItemsCenter = [options[key] boolValue];
-            } else if ([key isEqualToString:DZROptionCanBounceHorizontal]) {
-                self.canBounceHorizontal = [options[key] boolValue];
-            } else if ([key isEqualToString:DZROptionIndicatorNeedToCutTheRoundedCorners]) {
-                self.didIndicatorNeedToCutTheRoundedCorner = [options[key] boolValue];
-            }
-        }
-        
-        // 将需要计算的值配置好
-        [self setupValue];
-        
-        // 搭建子视图
-        [self setupSubViews];
+        // 设置数据
+        [self setupDataSource];
     }
     return self;
 }
@@ -154,6 +113,7 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
 /**设置初始默认值*/
 - (void)initValue
 {
+    self.callDataSourceMethodFinish = [[NSMutableDictionary alloc] initWithDictionary:@{@"controllersArray": @(NO), @"options": @(NO)}];
     self.pageMutaleArray = [NSMutableArray array];
     
     self.itemTitleFont = 15;
@@ -165,7 +125,7 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     self.menuHeight = 40.0;
     self.itemWidth = 60.0;
     self.indicatorWidth = 60.0;
-    self.indicatorHeight = 2.0;
+    self.indicatorHeight = 0.0;
     self.startEndMargin = 0.0;
     self.leftRightMargin = 15.0;
     self.topBottomMargin = 10.0;
@@ -183,26 +143,65 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     self.isItemsCenter = NO;
     self.canBounceHorizontal = NO;
     self.didIndicatorNeedToCutTheRoundedCorner = NO;
+    self.isloadSubViews = NO;
 }
 
 #pragma mark - Set up
+
+/**创建数据源*/
+- (void)setupOptions
+{
+    // 设置选项值
+    for (NSString *key in self.options) {
+        if ([key isEqualToString:DZROptionItemTitleFont]) {
+            self.itemTitleFont = [self.options[key] floatValue];
+        } else if ([key isEqualToString:DZROptionMenuHeight]) {
+            self.menuHeight = [self.options[key] floatValue];
+        } else if ([key isEqualToString:DZROptionItemWidth]) {
+            self.itemWidth = [self.options[key] floatValue];
+        } else if ([key isEqualToString:DZROptionIndicatorWidth]) {
+            self.indicatorWidth = [self.options[key] floatValue];
+        } else if ([key isEqualToString:DZROptionIndicatorHeight]) {
+            self.indicatorHeight = [self.options[key] floatValue];
+        } else if ([key isEqualToString:DZROptionLeftRightMargin]) {
+            self.leftRightMargin = [self.options[key] floatValue];
+        } else if ([key isEqualToString:DZROptionTopBottomMargin]) {
+            self.topBottomMargin = [self.options[key] floatValue];
+        } else if ([key isEqualToString:DZROptionIndicatorTopToItem]) {
+            self.indicatorTopToItem = [self.options[key] floatValue];
+        } else if ([key isEqualToString:DZROptionItemsSpace]) {
+            self.itemsSpace = [self.options[key] floatValue];
+        } else if ([key isEqualToString:DZROptionMenuColor]) {
+            self.menuColor = self.options[key];
+        } else if ([key isEqualToString:DZROptionControllersScrollViewColor]) {
+            self.controllersScrollViewColor = self.options[key];
+        } else if ([key isEqualToString:DZROptionSelectorItemTitleColor]) {
+            self.selectorItemTitleColor = self.options[key];
+        } else if ([key isEqualToString:DZROptionUnselectorItemTitleColor]) {
+            self.unselectorItemTitleColor = self.options[key];
+        } else if ([key isEqualToString:DZROptionIndicatorColor]) {
+            self.indicatorColor = self.options[key];
+        } else if ([key isEqualToString:DZROptionItemsCenter]) {
+            self.isItemsCenter = [self.options[key] boolValue];
+        } else if ([key isEqualToString:DZROptionCanBounceHorizontal]) {
+            self.canBounceHorizontal = [self.options[key] boolValue];
+        } else if ([key isEqualToString:DZROptionIndicatorNeedToCutTheRoundedCorners]) {
+            self.didIndicatorNeedToCutTheRoundedCorner = [self.options[key] boolValue];
+        }
+    }
+}
 
 /**初始化子视图*/
 - (void)setupSubViews
 {
     // 设置menuScrollerView
     self.menuScrollView = [[UIScrollView alloc] init];
-    self.menuScrollView.frame = CGRectMake(0.0, 0.0, kScreen_Width, self.menuHeight);
     self.menuScrollView.alwaysBounceHorizontal = self.canBounceHorizontal;
     self.menuScrollView.backgroundColor = self.menuColor;
     [self.view addSubview:self.menuScrollView];
     
     // 设置controllerScrollView
     self.controllerScrollView = [[UIScrollView alloc] init];
-    self.controllerScrollView.frame= CGRectMake(0.0,
-                                                CGRectGetMaxY(self.menuScrollView.frame),
-                                                kScreen_Width,
-                                                kScreen_Height - self.menuHeight);
     self.controllerScrollView.pagingEnabled = YES;
     self.controllerScrollView.alwaysBounceHorizontal = self.canBounceHorizontal;
     self.controllerScrollView.delegate = self;
@@ -215,29 +214,9 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     self.controllerScrollView.showsVerticalScrollIndicator = NO;
     self.controllerScrollView.showsHorizontalScrollIndicator = NO;
     
-    // 配置contentSize
-    CGFloat menuContentSizeWidth = 2 * (self.startEndMargin + self.leftRightMargin) + self.pageCount * self.itemWidth + (self.pageCount - 1) * self.itemsSpace;
-    self.menuScrollView.contentSize = CGSizeMake(menuContentSizeWidth, self.menuHeight);
-    self.controllerScrollView.contentSize = CGSizeMake(self.pageCount * kScreen_Width, kScreen_Height - self.menuHeight);
-    
     // 禁止滑到顶部
     self.menuScrollView.scrollsToTop = NO;
     self.controllerScrollView.scrollsToTop = NO;
-    
-    // 设置初始显示界面
-    if (![self.pageMutaleArray containsObject:@(self.currentPage)]) {
-        [self willMoveContrller:self.currentPage];
-        [self.pageMutaleArray addObject:@(self.currentPage)];
-        [self didMoveContrller:self.currentPage];
-    }
-    
-    // 设置offset
-    [self.controllerScrollView setContentOffset:CGPointMake(self.currentPage * kScreen_Width, self.menuHeight) animated:NO];
-    CGFloat menuOffsetX = 0.0;
-    if (self.menuScrollView.contentSize.width > kScreen_Width) {
-        menuOffsetX = self.controllerScrollView.contentOffset.x * self.offsetScale;
-        [self.menuScrollView setContentOffset:CGPointMake(menuOffsetX, 0.0) animated:NO];
-    }
     
     // 设置item view
     for (int i = 0; i < self.pageCount; i++) {
@@ -246,35 +225,21 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
 
     // 设置指示器
     self.indicatorView = [[UILabel alloc] init];
-    CGFloat indicatorX = self.startEndMargin + self.leftRightMargin + self.currentPage * (self.itemWidth + self.itemsSpace) + self.indicatorLeftToItem;
-    self.indicatorView = [[UIView alloc] initWithFrame:CGRectMake(indicatorX, self.indicatorTopToItem, self.indicatorWidth, self.indicatorHeight)];
+    self.indicatorView = [[UIView alloc] init];
     self.indicatorView.backgroundColor = self.indicatorColor;
-    if (self.didIndicatorNeedToCutTheRoundedCorner) {
-        self.indicatorView.layer.cornerRadius = self.indicatorHeight / 2;
-        self.indicatorView.layer.masksToBounds = YES;
-    }
     [self.menuScrollView addSubview:self.indicatorView];
 }
 
-/**创建菜单项*/
+/**
+ * 创建菜单项
+ *
+ * @param index 菜单项对应的下标
+ */
 - (void)setupItemViewAtIndexPage:(NSInteger)index
 {
     // 菜单项视图
     UILabel *itemView = [[UILabel alloc] init];
-    CGFloat x = self.startEndMargin + self.leftRightMargin + index * (self.itemsSpace + self.itemWidth);
-    itemView.frame = CGRectMake(x, 0.0, self.itemWidth, self.menuHeight);
-    itemView.backgroundColor = self.menuColor;
     itemView.tag = index + 100;
-    
-    UIViewController *childVC = self.controllersArray[index];
-    itemView.text = (childVC.title != nil) ? childVC.title : [NSString stringWithFormat:@"item%ld",(long)index];
-    itemView.font = [UIFont systemFontOfSize:self.itemTitleFont];
-    itemView.textAlignment = NSTextAlignmentCenter;
-    if (index == self.currentPage) {
-        itemView.textColor = self.selectorItemTitleColor;
-    } else {
-        itemView.textColor = self.unselectorItemTitleColor;
-    }
     [self.menuScrollView addSubview:itemView];
     
     // 给菜单项添加手势
@@ -282,6 +247,32 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] init];
     [recognizer addTarget:self action:@selector(itemCicked:)];
     [itemView addGestureRecognizer:recognizer];
+}
+
+
+/**
+ * 配置菜单项视图的frame
+ *
+ * @param index 菜单项对应的下标
+ */
+- (void)setupItemViewFrameAtIndexPage:(NSInteger)index
+{
+    // 菜单项视图
+    UILabel *itemView = (UILabel *)[self.menuScrollView viewWithTag:100 + index];
+    CGFloat x = self.startEndMargin + self.leftRightMargin + index * (self.itemsSpace + self.itemWidth);
+    itemView.frame = CGRectMake(x, 0.0, self.itemWidth, self.menuHeight);
+    
+    UIViewController *childVC = self.controllersArray[index];
+    itemView.text = (childVC.title != nil) ? childVC.title : [NSString stringWithFormat:@"item%ld",(long)index];
+    itemView.font = [UIFont systemFontOfSize:self.itemTitleFont];
+    itemView.textAlignment = NSTextAlignmentCenter;
+    itemView.backgroundColor = self.menuColor;
+    
+    if (index == self.currentPage) {
+        itemView.textColor = self.selectorItemTitleColor;
+    } else {
+        itemView.textColor = self.unselectorItemTitleColor;
+    }
 }
 
 /**设置值（需要初步计算获得）*/
@@ -327,32 +318,120 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     self.currentControllerScrollOffset = self.currentPage * kScreen_Width;
 }
 
-#pragma other method
+/**设置数据*/
+- (void)setupDataSource
+{
+    if ([self.dataSource respondsToSelector:@selector(setupPageMenuWithOptions)]) {
+        if ([[self.dataSource setupPageMenuWithOptions] count]) {
+            self.options = [self.dataSource setupPageMenuWithOptions];
+            [self.callDataSourceMethodFinish setValue:@(YES) forKey:@"options"];
+        }
+    }
+    
+    if ([self.dataSource respondsToSelector:@selector(addChildControllersToPageMenu)]) {
+        if ([[self.dataSource addChildControllersToPageMenu] count]) {
+            self.controllersArray = [self.dataSource addChildControllersToPageMenu];
+            self.pageCount = self.controllersArray.count;
+            [self.callDataSourceMethodFinish setValue:@(YES) forKey:@"controllersArray"];
+        }
+    }
+    
+    if ([self.callDataSourceMethodFinish[@"controllersArray"] boolValue] &&
+        [self.callDataSourceMethodFinish[@"options"] boolValue]) {
+        
+        // 设置选择项
+        [self setupOptions];
+        
+        // 将需要计算的值配置好
+        [self setupValue];
+        
+        // 设置子视图
+        if (self.isloadSubViews) {
+            [self viewLayoutSubViews];
+        } else {
+            [self setupSubViews];
+            [self viewLayoutSubViews];
+            self.isloadSubViews = YES;
+        }
+    }
+}
+
+- (void)viewLayoutSubViews
+{
+    // 设置menuScrollerView
+    self.menuScrollView.frame = CGRectMake(0.0, 0.0, kScreen_Width, self.menuHeight);
+    
+    // 设置controllerScrollView
+    self.controllerScrollView.frame= CGRectMake(0.0, CGRectGetMaxY(self.menuScrollView.frame), kScreen_Width, kScreen_Height - self.menuHeight);
+    
+    // 配置contentSize
+    CGFloat menuContentSizeWidth = 2 * (self.startEndMargin + self.leftRightMargin) + self.pageCount * self.itemWidth + (self.pageCount - 1) * self.itemsSpace;
+    self.menuScrollView.contentSize = CGSizeMake(menuContentSizeWidth, self.menuHeight);
+    self.controllerScrollView.contentSize = CGSizeMake(self.pageCount * kScreen_Width, kScreen_Height - self.menuHeight);
+    
+    // 设置offset
+    [self.controllerScrollView setContentOffset:CGPointMake(self.currentPage * kScreen_Width, self.menuHeight) animated:NO];
+    CGFloat menuOffsetX = 0.0;
+    if (self.menuScrollView.contentSize.width > kScreen_Width) {
+        menuOffsetX = self.controllerScrollView.contentOffset.x * self.offsetScale;
+        [self.menuScrollView setContentOffset:CGPointMake(menuOffsetX, 0.0) animated:NO];
+    }
+    
+    // 设置item view
+    for (int i = 0; i < self.pageCount; i++) {
+        [self setupItemViewFrameAtIndexPage:i];
+    }
+    
+    // 设置指示器
+    CGFloat indicatorX = self.startEndMargin + self.leftRightMargin + self.currentPage * (self.itemWidth + self.itemsSpace) + self.indicatorLeftToItem;
+    self.indicatorView.frame = CGRectMake(indicatorX, self.indicatorTopToItem, self.indicatorWidth, self.indicatorHeight);
+    if (self.didIndicatorNeedToCutTheRoundedCorner) {
+        self.indicatorView.layer.cornerRadius = self.indicatorHeight / 2;
+        self.indicatorView.layer.masksToBounds = YES;
+    }
+    
+    // 设置初始显示界面
+    if (![self.pageMutaleArray containsObject:@(self.currentPage)]) {
+        [self willMoveContrller:self.currentPage];
+        [self.pageMutaleArray addObject:@(self.currentPage)];
+        [self didMoveContrller:self.currentPage];
+    }
+}
+
+#pragma mark - show/dismiss
 
 /**将新出现的视图加载出来*/
 - (void)willMoveContrller:(NSInteger)indexPage
 {
     UIViewController *childVC = self.controllersArray[indexPage];
-    if ([self.delegate respondsToSelector:@selector(pageMenu:willMoveTheChildController:atIndexPage:)]) {
-        [self.delegate pageMenu:self willMoveTheChildController:childVC atIndexPage:indexPage];
+    if (childVC) {
+        if ([self.delegate respondsToSelector:@selector(pageMenu:willMoveTheChildController:atIndexPage:)]) {
+            [self.delegate pageMenu:self willMoveTheChildController:childVC atIndexPage:indexPage];
+        }
+        [childVC willMoveToParentViewController:self];
+        
+        CGFloat x = indexPage * kScreen_Width;
+        CGFloat height = self.controllerScrollView.frame.size.height;
+        childVC.view.frame = CGRectMake(x, 0.0, kScreen_Width, height);
+        [self.controllerScrollView addSubview:childVC.view];
+        
+        [self addChildViewController:childVC];
+        [childVC didMoveToParentViewController:self];
+        
+//        NSLog(@"%@",[NSString stringWithFormat:@"%ld将要出来了",(long)indexPage]);
     }
-    [childVC willMoveToParentViewController:self];
-    
-    CGFloat x = indexPage * kScreen_Width;
-    CGFloat height = self.controllerScrollView.frame.size.height;
-    childVC.view.frame = CGRectMake(x, 0.0, kScreen_Width, height);
-    [self.controllerScrollView addSubview:childVC.view];
-    
-    [self addChildViewController:childVC];
-    [childVC didMoveToParentViewController:self];
 }
 
 /**视图正式加载为当前视图*/
 - (void)didMoveContrller:(NSInteger)indexPage
 {
     UIViewController *childVC = self.controllersArray[indexPage];
-    if ([self.delegate respondsToSelector:@selector(pageMenu:didMoveTheChildController:atIndexPage:)]) {
-        [self.delegate pageMenu:self didMoveTheChildController:childVC atIndexPage:indexPage];
+    if (childVC) {
+        if ([self.delegate respondsToSelector:@selector(pageMenu:didMoveTheChildController:atIndexPage:)]) {
+            [self.delegate pageMenu:self didMoveTheChildController:childVC atIndexPage:indexPage];
+        }
+        
+//        NSLog(@"%@",[NSString stringWithFormat:@"%ld已经出来了",(long)indexPage]);
     }
 }
 
@@ -360,11 +439,17 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
 - (void)removeControllerAtIndex:(NSInteger)indexPage
 {
     UIViewController *childVC = self.controllersArray[indexPage];
-    [childVC willMoveToParentViewController:nil];
-    [childVC.view removeFromSuperview];
-    [childVC removeFromParentViewController];
-    [childVC didMoveToParentViewController:nil];
+    if (childVC) {
+        [childVC willMoveToParentViewController:nil];
+        [childVC.view removeFromSuperview];
+        [childVC removeFromParentViewController];
+        [childVC didMoveToParentViewController:nil];
+        
+//        NSLog(@"%@",[NSString stringWithFormat:@"%ld移除",(long)indexPage]);
+    }
 }
+
+#pragma mark - Refresh
 
 /**刷新indicatorView和menuScrollView的位置*/
 - (void)refreshIndicatorViewAndMenuScrollView
@@ -414,9 +499,8 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
         // 如果直接调用 setContentOffset 方法，则会先进入 scrollViewScrollAnimationFinished 方法中
         [UIView animateWithDuration:0.5 animations:^{
             [self.controllerScrollView setContentOffset:CGPointMake(indexPage * kScreen_Width, self.menuHeight)];
+            [self scrollViewScrollAnimationFinished:self.controllerScrollView];
         }];
-        
-        [self scrollViewScrollAnimationFinished:self.controllerScrollView];
     }
 }
 

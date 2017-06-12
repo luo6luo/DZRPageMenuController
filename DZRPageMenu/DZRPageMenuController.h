@@ -8,10 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol DZRPageMenuDataSource <NSObject>
+@required
+
+/**将要添加到父视图中的子视图控制器*/
+- (NSArray *)addChildControllersToPageMenu;
+
+/**配置菜单栏的选项*/
+- (NSDictionary *)setupPageMenuWithOptions;
+    
+@end
+
 @protocol DZRPageMenuDelegate <NSObject>
+@optional
 
 /**
- * 分页菜单控制器将要把该下标的子视图控制器移出来
+ * 分页菜单控制器将要把该下标的子视图控制器加载出来
  *
  * @param childController 将要加载的子视图
  * @param indexPage 子视图下标
@@ -30,11 +42,8 @@
 
 @interface DZRPageMenuController : UIViewController
 
-@property (nonatomic, weak) id<DZRPageMenuDelegate> delegate;
-
-- (instancetype)initWithFrame:(CGRect)frame
-                  controllers:(NSArray *)controllers
-                      options:(NSDictionary *)options;
+/**重新加载pageMenu*/
+- (void)reloadPageMenu;
 
 // 选项key值
 extern NSString * const DZROptionItemTitleFont;

@@ -7,30 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F304C5D1EEA889C0056A197 /* DZRPageMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F304C5C1EEA889C0056A197 /* DZRPageMenuController.m */; };
 		6F98944C1EE8E50500A973FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F98944B1EE8E50500A973FC /* main.m */; };
 		6F98944F1EE8E50500A973FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F98944E1EE8E50500A973FC /* AppDelegate.m */; };
-		6F9894521EE8E50500A973FC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9894511EE8E50500A973FC /* ViewController.m */; };
 		6F9894551EE8E50500A973FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F9894531EE8E50500A973FC /* Main.storyboard */; };
 		6F9894571EE8E50500A973FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F9894561EE8E50500A973FC /* Assets.xcassets */; };
 		6F98945A1EE8E50500A973FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F9894581EE8E50500A973FC /* LaunchScreen.storyboard */; };
-		6F9894641EE8E5E400A973FC /* DZRPageMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9894631EE8E5E400A973FC /* DZRPageMenuController.m */; };
 		6F9894691EE8E67E00A973FC /* ChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9894661EE8E67E00A973FC /* ChildViewController.m */; };
 		6F98946A1EE8E67E00A973FC /* DZRPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9894681EE8E67E00A973FC /* DZRPageController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6F304C5B1EEA889C0056A197 /* DZRPageMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZRPageMenuController.h; sourceTree = "<group>"; };
+		6F304C5C1EEA889C0056A197 /* DZRPageMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZRPageMenuController.m; sourceTree = "<group>"; };
 		6F9894471EE8E50500A973FC /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F98944B1EE8E50500A973FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6F98944D1EE8E50500A973FC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6F98944E1EE8E50500A973FC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		6F9894501EE8E50500A973FC /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		6F9894511EE8E50500A973FC /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		6F9894541EE8E50500A973FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6F9894561EE8E50500A973FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6F9894591EE8E50500A973FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6F98945B1EE8E50500A973FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6F9894621EE8E5E400A973FC /* DZRPageMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZRPageMenuController.h; sourceTree = "<group>"; };
-		6F9894631EE8E5E400A973FC /* DZRPageMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZRPageMenuController.m; sourceTree = "<group>"; };
 		6F9894651EE8E67E00A973FC /* ChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildViewController.h; sourceTree = "<group>"; };
 		6F9894661EE8E67E00A973FC /* ChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildViewController.m; sourceTree = "<group>"; };
 		6F9894671EE8E67E00A973FC /* DZRPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZRPageController.h; sourceTree = "<group>"; };
@@ -70,8 +67,6 @@
 				6F9894611EE8E5D000A973FC /* DZRPageMenu */,
 				6F98944D1EE8E50500A973FC /* AppDelegate.h */,
 				6F98944E1EE8E50500A973FC /* AppDelegate.m */,
-				6F9894501EE8E50500A973FC /* ViewController.h */,
-				6F9894511EE8E50500A973FC /* ViewController.m */,
 				6F9894651EE8E67E00A973FC /* ChildViewController.h */,
 				6F9894661EE8E67E00A973FC /* ChildViewController.m */,
 				6F9894671EE8E67E00A973FC /* DZRPageController.h */,
@@ -96,8 +91,8 @@
 		6F9894611EE8E5D000A973FC /* DZRPageMenu */ = {
 			isa = PBXGroup;
 			children = (
-				6F9894621EE8E5E400A973FC /* DZRPageMenuController.h */,
-				6F9894631EE8E5E400A973FC /* DZRPageMenuController.m */,
+				6F304C5B1EEA889C0056A197 /* DZRPageMenuController.h */,
+				6F304C5C1EEA889C0056A197 /* DZRPageMenuController.m */,
 			);
 			name = DZRPageMenu;
 			sourceTree = "<group>";
@@ -173,9 +168,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F9894641EE8E5E400A973FC /* DZRPageMenuController.m in Sources */,
 				6F98946A1EE8E67E00A973FC /* DZRPageController.m in Sources */,
-				6F9894521EE8E50500A973FC /* ViewController.m in Sources */,
+				6F304C5D1EEA889C0056A197 /* DZRPageMenuController.m in Sources */,
 				6F9894691EE8E67E00A973FC /* ChildViewController.m in Sources */,
 				6F98944F1EE8E50500A973FC /* AppDelegate.m in Sources */,
 				6F98944C1EE8E50500A973FC /* main.m in Sources */,
@@ -341,6 +335,7 @@
 				6F9894601EE8E50500A973FC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

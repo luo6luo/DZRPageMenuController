@@ -21,7 +21,7 @@ NSString * const DZROptionIndicatorHeight                     = @"indicatorHeigh
 NSString * const DZROptionLeftRightMargin                     = @"leftRightMargin";
 NSString * const DZROptionItemTopMargin                       = @"itemTopMargin";
 NSString * const DZROptionItemBottomMargin                    = @"itemBottomMargin";
-NSString * const DZROptionIndicatorTopToItem                  = @"indicatorTopToItem";
+NSString * const DZROptionIndicatorTopToMenu                  = @"indicatorTopToMenu";
 NSString * const DZROptionItemsSpace                          = @"itemsSpace";
 
 NSString * const DZROptionMenuColor                           = @"menuColor";
@@ -35,12 +35,6 @@ NSString * const DZROptionIndicatorNeedToCutTheRoundedCorners = @"indicatorNeedT
 NSString * const DZROptionItemsCenter                         = @"itemsCenter";
 NSString * const DZROptionCanBounceHorizontal                 = @"canBounceHorizontal";
 
-typedef NS_ENUM(NSInteger, DZRScrollDirection) {
-    DZRScrollDirectionLeft,
-    DZRScrollDirectionRight,
-    DZRScrollDirectionOther
-};
-
 @interface DZRPageMenuController ()<UIScrollViewDelegate>
 
 @property (nonatomic, weak) id<DZRPageMenuDelegate> delegate;
@@ -53,7 +47,6 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
 @property (nonatomic, strong) NSDictionary *options;           // 选择项
 @property (nonatomic, strong) NSArray *controllersArray;       // 子视图控制器数组
 @property (nonatomic, strong) NSMutableArray *pageMutaleArray; // 已经加载还在内存中的页面
-@property (nonatomic, strong) NSMutableDictionary *callDataSourceMethodFinish; // 获取数据源完成
 
 @property (nonatomic, assign) CGFloat itemTitleFont;    // 菜单项标题字体大小
 @property (nonatomic, assign) NSInteger pageCount;      // 页面个数
@@ -70,7 +63,7 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
 @property (nonatomic, assign) CGFloat itemTopMargin;       // 菜单项距离父视图上面的距离
 @property (nonatomic, assign) CGFloat itemBottomMargin;    // 菜单项距离父视图下面的距离
 @property (nonatomic, assign) CGFloat indicatorLeftToItem; // 指示器左边距离菜单项左边距离
-@property (nonatomic, assign) CGFloat indicatorTopToItem;  // 指示器顶部距离菜单项顶部距离
+@property (nonatomic, assign) CGFloat indicatorTopToMenu;  // 指示器顶部距离菜单栏顶部距离
 @property (nonatomic, assign) CGFloat itemsSpace;          // 菜单项之间的空隙
 @property (nonatomic, assign) CGFloat currentControllerScrollOffset; // 当前controllerScrollView滑动中偏移量
 
@@ -96,44 +89,62 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
 
 #pragma mark - Init
 
+/**
+ 1. 继承 DZRPageMenuController 方式使用
+ 2. 加载 DZRPageMenuController.view 方式使用
+ */
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [self init];
+    self.view.frame = frame;
+    return self;
+}
+
+// 加载 DZRPageMenuController.view 方式使用
+- (instancetype)initWithFrame:(CGRect)frame delegate:(id)controller;
+{
+    self.delegate = controller;
+    self.dataSource = controller;
+    
+    self = [self init];
+    self.view.frame = frame;
+    return self;
+}
+
 - (instancetype)init
 {
     if (self = [super init]) {
         
         self.view.backgroundColor = [UIColor whiteColor];
-        self.delegate = self;
-        self.dataSource = self;
+        
+        if (!self.delegate) {
+            self.delegate = self;
+        }
+        
+        if (!self.dataSource) {
+            self.dataSource = self;
+        }
         
         // 设置初始默认值
         [self initValue];
         
         if ([self.dataSource respondsToSelector:@selector(setupPageMenuWithOptions)]) {
-            if ([[self.dataSource setupPageMenuWithOptions] count]) {
-                self.options = [self.dataSource setupPageMenuWithOptions];
-                [self.callDataSourceMethodFinish setValue:@(YES) forKey:@"options"];
-            }
+            self.options = [self.dataSource setupPageMenuWithOptions];
         }
         
         if ([self.dataSource respondsToSelector:@selector(addChildControllersToPageMenu)]) {
-            if ([[self.dataSource addChildControllersToPageMenu] count]) {
-                self.controllersArray = [self.dataSource addChildControllersToPageMenu];
-                self.pageCount = self.controllersArray.count;
-                [self.callDataSourceMethodFinish setValue:@(YES) forKey:@"controllersArray"];
-            }
+            self.controllersArray = [self.dataSource addChildControllersToPageMenu];
+            self.pageCount = self.controllersArray.count;
         }
         
-        if ([self.callDataSourceMethodFinish[@"controllersArray"] boolValue] &&
-            [self.callDataSourceMethodFinish[@"options"] boolValue]) {
-            
-            // 设置选择项
-            [self setupOptions];
-            
-            // 将需要计算的值配置好
-            [self setupValue];
-            
-            // 设置子视图
-            [self setupSubViews];
-        }
+        // 设置选择项
+        [self setupOptions];
+        
+        // 将需要计算的值配置好
+        [self setupValue];
+        
+        // 设置子视图
+        [self setupSubViews];
     }
     return self;
 }
@@ -141,7 +152,6 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
 /**设置初始默认值*/
 - (void)initValue
 {
-    self.callDataSourceMethodFinish = [[NSMutableDictionary alloc] initWithDictionary:@{@"controllersArray": @(NO), @"options": @(NO)}];
     self.pageMutaleArray = [NSMutableArray array];
     
     self.itemTitleFont = 15;
@@ -159,7 +169,7 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     self.itemTopMargin = 10.0;
     self.itemBottomMargin = 10.0;
     self.indicatorLeftToItem = 0.0;
-    self.indicatorTopToItem = 38.0;
+    self.indicatorTopToMenu = 38.0;
     self.itemsSpace = 0.0;
     self.currentControllerScrollOffset = 0.0;
     
@@ -201,8 +211,8 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
             self.itemTopMargin = [self.options[key] floatValue];
         } else if ([key isEqualToString:DZROptionItemBottomMargin]) {
             self.itemBottomMargin = [self.options[key] floatValue];
-        } else if ([key isEqualToString:DZROptionIndicatorTopToItem]) {
-            self.indicatorTopToItem = [self.options[key] floatValue];
+        } else if ([key isEqualToString:DZROptionIndicatorTopToMenu]) {
+            self.indicatorTopToMenu = [self.options[key] floatValue];
         } else if ([key isEqualToString:DZROptionItemsSpace]) {
             self.itemsSpace = [self.options[key] floatValue];
         } else if ([key isEqualToString:DZROptionMenuColor]) {
@@ -231,11 +241,12 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     // 设置menuScrollerView
     self.menuScrollView = [[UIScrollView alloc] init];
     self.menuScrollView.alwaysBounceHorizontal = self.canBounceHorizontal;
+    self.menuScrollView.alwaysBounceVertical = NO;
     self.menuScrollView.backgroundColor = self.menuColor;
     [self.view addSubview:self.menuScrollView];
     if (@available(iOS 11.0, *)) {
         self.menuScrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
-    } 
+    }
     
     // 设置controllerScrollView
     self.controllerScrollView = [[UIScrollView alloc] init];
@@ -347,8 +358,8 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     self.indicatorLeftToItem = (self.itemWidth - self.indicatorWidth) / 2;
     
     // 确认指示器距离对应菜单项顶部距离
-    if (self.indicatorTopToItem  > self.menuHeight - self.indicatorHeight) {
-        self.indicatorTopToItem  = self.menuHeight - self.indicatorHeight;
+    if (self.indicatorTopToMenu  > self.menuHeight - self.indicatorHeight) {
+        self.indicatorTopToMenu  = self.menuHeight - self.indicatorHeight;
     }
     
     // 计算偏移量比例
@@ -383,7 +394,7 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
     
     // 设置指示器
     CGFloat indicatorX = self.startEndMargin + self.leftRightMargin + self.currentPage * (self.itemWidth + self.itemsSpace) + self.indicatorLeftToItem;
-    self.indicatorView.frame = CGRectMake(indicatorX, self.indicatorTopToItem, self.indicatorWidth, self.indicatorHeight);
+    self.indicatorView.frame = CGRectMake(indicatorX, self.indicatorTopToMenu, self.indicatorWidth, self.indicatorHeight);
     
     // 设置初始显示界面
     if (![self.pageMutaleArray containsObject:@(self.currentPage)]) {
@@ -472,7 +483,6 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
 /**点击菜单项*/
 - (void)itemCicked:(UITapGestureRecognizer *)recognizer
 {
-    // 标记问题：点击item无效
     UILabel *itemView = (UILabel *)recognizer.view;
     NSInteger indexPage = itemView.tag - 100;
     
@@ -490,10 +500,9 @@ typedef NS_ENUM(NSInteger, DZRScrollDirection) {
         self.oldCurrentPage = self.currentPage;
         self.currentPage = indexPage;
         
-        // 注意：此处使用动画的话，会先走 setContentOffset 方法
-        // 如果直接调用 setContentOffset 方法，则会先进入 scrollViewScrollAnimationFinished 方法中
         [UIView animateWithDuration:0.5 animations:^{
             [self.controllerScrollView setContentOffset:CGPointMake(indexPage * kScreen_Width, 0.0)];
+        } completion:^(BOOL finished) {
             [self scrollViewScrollAnimationFinished:self.controllerScrollView];
         }];
     }

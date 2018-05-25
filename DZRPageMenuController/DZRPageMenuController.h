@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+# pragma mark - Protocol
+
 @protocol DZRPageMenuDataSource <NSObject>
 @required
 
@@ -42,6 +44,36 @@
 
 @interface DZRPageMenuController : UIViewController <DZRPageMenuDelegate, DZRPageMenuDataSource>
 
+# pragma mark - Init
+
+/*
+ =============================================================
+ 说明: 'DZRPageMenuController'使用类似'UITableViewController'
+ 1. 可以采用继承的方式使用
+ 2. 可以使用添加view的方式使用
+ 
+ 注意:
+ 1. 继承的使用方式不限初始化方法
+ 2. 添加view的方式，只能使用含有代理的初始化
+ =============================================================
+ */
+
+/**初始化，可以设置view的位置*/
+- (instancetype)initWithFrame:(CGRect)frame;
+
+
+/**
+ 初始化
+ 注意：采用添加view的方式时，必须使用此初始化方式
+ 
+ @param frame view的位子
+ @param controller 代理控制器
+ @return 初始化结果
+ */
+- (instancetype)initWithFrame:(CGRect)frame delegate:(id)controller;
+
+# pragma mark - Key
+
 // 选项key值
 extern NSString * const DZROptionItemTitleFont;      // 菜单项字体大小
 extern NSString * const DZROptionCurrentPage;        // 当前显示页面位置(在菜单项未超过屏宽宽度情况下有效)
@@ -53,7 +85,7 @@ extern NSString * const DZROptionIndicatorHeight;    // 指示器高度
 extern NSString * const DZROptionLeftRightMargin;    // 第一个和最后一个菜单项距离父视图的留白距离
 extern NSString * const DZROptionItemTopMargin;      // 菜单项距离父视图上面的距离
 extern NSString * const DZROptionItemBottomMargin;   // 菜单项距离父视图下面面的距离
-extern NSString * const DZROptionIndicatorTopToItem; // 指示器顶部距离对应菜单项顶部距离
+extern NSString * const DZROptionIndicatorTopToMenu; // 指示器顶部距离菜单栏顶部距离
 extern NSString * const DZROptionItemsSpace;         // 菜单项之间的空隙
 
 extern NSString * const DZROptionMenuColor;                  // 菜单栏的颜色

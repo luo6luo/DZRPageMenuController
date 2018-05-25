@@ -51,7 +51,7 @@ DZRSuperController *pageMenuController = [[DZRPageController alloc] init];
 [self.view addSubview: pageMenuController.view];
 ```
 
-<strong>注意：具体的协议有2个，不管采用哪种方式都需要实现。
+**注意：** 具体的协议有2个，不管采用哪种方式都需要实现。
 ```objective-c
 #pragma mark - DZRPageMenuDataSource（必须实现）
 

@@ -85,6 +85,9 @@ DZRSuperController *superController = [[DZRPageController alloc] init];
 #### 1.1.1 Release(12/06/2017)
 * 配合CocoaPods进行更新
 
+#### 1.1.2 Release(05/25/2018)
+* 修复items不能固定的问题
+
 ### 版权
 `DZRPageMenuController`是根据`MIT license`条款和条件分发的,本文所有权属于作者。
 

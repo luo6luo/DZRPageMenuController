@@ -16,7 +16,7 @@
 
 /**配置菜单栏的选项*/
 - (NSDictionary *)setupPageMenuWithOptions;
-    
+
 @end
 
 @protocol DZRPageMenuDelegate <NSObject>
@@ -43,14 +43,16 @@
 @interface DZRPageMenuController : UIViewController <DZRPageMenuDelegate, DZRPageMenuDataSource>
 
 // 选项key值
-extern NSString * const DZROptionItemTitleFont;
+extern NSString * const DZROptionItemTitleFont;      // 菜单项字体大小
+extern NSString * const DZROptionCurrentPage;        // 当前显示页面位置(在菜单项未超过屏宽宽度情况下有效)
 
 extern NSString * const DZROptionMenuHeight;         // 菜单栏高度
 extern NSString * const DZROptionItemWidth;          // 菜单项宽度
 extern NSString * const DZROptionIndicatorWidth;     // 指示器的宽度
 extern NSString * const DZROptionIndicatorHeight;    // 指示器高度
 extern NSString * const DZROptionLeftRightMargin;    // 第一个和最后一个菜单项距离父视图的留白距离
-extern NSString * const DZROptionTopBottomMargin;    // 菜单项距离父视图上面和下面的距离
+extern NSString * const DZROptionItemTopMargin;      // 菜单项距离父视图上面的距离
+extern NSString * const DZROptionItemBottomMargin;   // 菜单项距离父视图下面面的距离
 extern NSString * const DZROptionIndicatorTopToItem; // 指示器顶部距离对应菜单项顶部距离
 extern NSString * const DZROptionItemsSpace;         // 菜单项之间的空隙
 

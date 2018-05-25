@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "DZRPageMenuController"
-  s.version      = "1.1.0"
+  s.version      = "1.1.1"
   s.summary      = "A simple paging menu controller."
   s.homepage     = "https://github.com/luo6luo/DZRPageMenuController"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }

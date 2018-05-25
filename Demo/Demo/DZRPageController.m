@@ -31,7 +31,8 @@
        DZROptionIndicatorWidth: @(35.0),
        DZROptionIndicatorHeight: @(2.0),
        DZROptionLeftRightMargin: @(15.0),
-       DZROptionTopBottomMargin: @(10.0),
+       DZROptionItemTopMargin: @(15.0),
+       DZROptionItemBottomMargin: @(10.0),
        DZROptionIndicatorTopToItem: @(30.0),
        DZROptionItemsSpace: @(5.0),
        DZROptionMenuColor: [UIColor colorWithRed:80.0/255.0 green:143.0/255.0 blue:242.0/255.0 alpha:1.0],
@@ -40,7 +41,7 @@
        DZROptionUnselectorItemTitleColor: [UIColor colorWithRed:254.0/255.0 green:213.0/255.0 blue:48.0/255.0 alpha:1.0],
        DZROptionIndicatorColor: [UIColor colorWithRed:253.0/255.0 green:140.0/255.0 blue:37.0/255.0 alpha:1.0],
        DZROptionItemsCenter: @(YES),
-       DZROptionCanBounceHorizontal: @(YES),
+       DZROptionCanBounceHorizontal: @(NO),
        DZROptionIndicatorNeedToCutTheRoundedCorners: @(YES)
     };
     return options;

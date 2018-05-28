@@ -33,14 +33,14 @@
        DZROptionLeftRightMargin: @(15.0),
        DZROptionItemTopMargin: @(15.0),
        DZROptionItemBottomMargin: @(10.0),
-       DZROptionIndicatorTopToItem: @(30.0),
+       DZROptionIndicatorTopToMenu: @(30.0),
        DZROptionItemsSpace: @(5.0),
        DZROptionMenuColor: [UIColor colorWithRed:80.0/255.0 green:143.0/255.0 blue:242.0/255.0 alpha:1.0],
        DZROptionControllersScrollViewColor: [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:244.0/255.0 alpha:1.0],
        DZROptionSelectorItemTitleColor: [UIColor colorWithRed:253.0/255.0 green:140.0/255.0 blue:37.0/255.0 alpha:1.0],
        DZROptionUnselectorItemTitleColor: [UIColor colorWithRed:254.0/255.0 green:213.0/255.0 blue:48.0/255.0 alpha:1.0],
        DZROptionIndicatorColor: [UIColor colorWithRed:253.0/255.0 green:140.0/255.0 blue:37.0/255.0 alpha:1.0],
-       DZROptionItemsCenter: @(YES),
+       DZROptionItemsCenter: @(NO),
        DZROptionCanBounceHorizontal: @(NO),
        DZROptionIndicatorNeedToCutTheRoundedCorners: @(YES)
     };
@@ -53,6 +53,7 @@
     for (int i = 0; i < 7; i++) {
         ChildViewController * childVC = [[ChildViewController alloc] init];
         childVC.view.backgroundColor = [UIColor colorWithRed:(arc4random()%255)/255.0 green:(arc4random()%255)/255.0 blue:(arc4random()%255)/255.0 alpha:1.0];
+        childVC.text = [NSString stringWithFormat:@"item：%d",i];
         [controllersArr addObject:childVC];
     }
     return controllersArr;

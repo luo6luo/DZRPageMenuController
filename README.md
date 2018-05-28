@@ -3,14 +3,18 @@
 
 ![Pod Version](https://img.shields.io/badge/pod-v1.1.3-brightgreen.svg?style=flat) ![Pod License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat) ![Pod Platform](https://img.shields.io/badge/platform-iOS-yellow.svg?style=flat)
 
-## 目录
+## 目录  
+* [示例](#示例)
 * [使用条件](#使用条件)
 * [描述](#描述)
 * [安装](#安装)
 * [使用](#使用)
 * [更新日志](#更新日志)
 * [版权](#版权)
-* [个人补充](#个人补充)
+* [个人补充](#个人补充)  
+
+### 示例
+![img](https://github.com/luo6luo/DZRPageMenuController/blob/master/demo.gif)
 
 ### 使用条件
 iOS8.0及以上设备能够使用

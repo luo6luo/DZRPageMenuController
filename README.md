@@ -14,7 +14,7 @@
 * [个人补充](#个人补充)  
 
 ### 示例
-![img](https://github.com/luo6luo/raw/master/images-folder/demo.gif)
+![img](https://github.com/luo6luo/DZRPageMenuController/blob/master/demo.gif)
 
 ### 使用条件
 iOS8.0及以上设备能够使用

@@ -13,8 +13,10 @@
 		6F9894551EE8E50500A973FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F9894531EE8E50500A973FC /* Main.storyboard */; };
 		6F9894571EE8E50500A973FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F9894561EE8E50500A973FC /* Assets.xcassets */; };
 		6F98945A1EE8E50500A973FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F9894581EE8E50500A973FC /* LaunchScreen.storyboard */; };
-		6F9894691EE8E67E00A973FC /* ChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9894661EE8E67E00A973FC /* ChildViewController.m */; };
-		6F98946A1EE8E67E00A973FC /* DZRPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9894681EE8E67E00A973FC /* DZRPageController.m */; };
+		6F9894691EE8E67E00A973FC /* DZRChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9894661EE8E67E00A973FC /* DZRChildViewController.m */; };
+		6F98946A1EE8E67E00A973FC /* DZRInheritPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9894681EE8E67E00A973FC /* DZRInheritPageController.m */; };
+		6FF56FF820BBAB8800889003 /* DZRSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FF56FF720BBAB8800889003 /* DZRSelectController.m */; };
+		6FF56FFB20BBAE4F00889003 /* DZRAddViewPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FF56FFA20BBAE4F00889003 /* DZRAddViewPageController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,10 +30,14 @@
 		6F9894561EE8E50500A973FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6F9894591EE8E50500A973FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6F98945B1EE8E50500A973FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6F9894651EE8E67E00A973FC /* ChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildViewController.h; sourceTree = "<group>"; };
-		6F9894661EE8E67E00A973FC /* ChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildViewController.m; sourceTree = "<group>"; };
-		6F9894671EE8E67E00A973FC /* DZRPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZRPageController.h; sourceTree = "<group>"; };
-		6F9894681EE8E67E00A973FC /* DZRPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZRPageController.m; sourceTree = "<group>"; };
+		6F9894651EE8E67E00A973FC /* DZRChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZRChildViewController.h; sourceTree = "<group>"; };
+		6F9894661EE8E67E00A973FC /* DZRChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZRChildViewController.m; sourceTree = "<group>"; };
+		6F9894671EE8E67E00A973FC /* DZRInheritPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZRInheritPageController.h; sourceTree = "<group>"; };
+		6F9894681EE8E67E00A973FC /* DZRInheritPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZRInheritPageController.m; sourceTree = "<group>"; };
+		6FF56FF620BBAB8800889003 /* DZRSelectController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZRSelectController.h; sourceTree = "<group>"; };
+		6FF56FF720BBAB8800889003 /* DZRSelectController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DZRSelectController.m; sourceTree = "<group>"; };
+		6FF56FF920BBAE4F00889003 /* DZRAddViewPageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZRAddViewPageController.h; sourceTree = "<group>"; };
+		6FF56FFA20BBAE4F00889003 /* DZRAddViewPageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DZRAddViewPageController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,14 +83,14 @@
 				6F45092A1EEE3107004827FE /* DZRPageMenuController */,
 				6F98944D1EE8E50500A973FC /* AppDelegate.h */,
 				6F98944E1EE8E50500A973FC /* AppDelegate.m */,
-				6F9894651EE8E67E00A973FC /* ChildViewController.h */,
-				6F9894661EE8E67E00A973FC /* ChildViewController.m */,
-				6F9894671EE8E67E00A973FC /* DZRPageController.h */,
-				6F9894681EE8E67E00A973FC /* DZRPageController.m */,
-				6F9894531EE8E50500A973FC /* Main.storyboard */,
-				6F9894561EE8E50500A973FC /* Assets.xcassets */,
-				6F9894581EE8E50500A973FC /* LaunchScreen.storyboard */,
-				6F98945B1EE8E50500A973FC /* Info.plist */,
+				6F9894651EE8E67E00A973FC /* DZRChildViewController.h */,
+				6F9894661EE8E67E00A973FC /* DZRChildViewController.m */,
+				6F9894671EE8E67E00A973FC /* DZRInheritPageController.h */,
+				6F9894681EE8E67E00A973FC /* DZRInheritPageController.m */,
+				6FF56FF920BBAE4F00889003 /* DZRAddViewPageController.h */,
+				6FF56FFA20BBAE4F00889003 /* DZRAddViewPageController.m */,
+				6FF56FF620BBAB8800889003 /* DZRSelectController.h */,
+				6FF56FF720BBAB8800889003 /* DZRSelectController.m */,
 				6F98944A1EE8E50500A973FC /* Supporting Files */,
 			);
 			path = Demo;
@@ -93,6 +99,10 @@
 		6F98944A1EE8E50500A973FC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6F9894531EE8E50500A973FC /* Main.storyboard */,
+				6F9894561EE8E50500A973FC /* Assets.xcassets */,
+				6F9894581EE8E50500A973FC /* LaunchScreen.storyboard */,
+				6F98945B1EE8E50500A973FC /* Info.plist */,
 				6F98944B1EE8E50500A973FC /* main.m */,
 			);
 			name = "Supporting Files";
@@ -124,6 +134,7 @@
 		6F98943F1EE8E50400A973FC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = DZR;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "顿顿";
 				TargetAttributes = {
@@ -169,11 +180,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F98946A1EE8E67E00A973FC /* DZRPageController.m in Sources */,
+				6FF56FF820BBAB8800889003 /* DZRSelectController.m in Sources */,
+				6F98946A1EE8E67E00A973FC /* DZRInheritPageController.m in Sources */,
 				6F45092D1EEE3107004827FE /* DZRPageMenuController.m in Sources */,
-				6F9894691EE8E67E00A973FC /* ChildViewController.m in Sources */,
+				6F9894691EE8E67E00A973FC /* DZRChildViewController.m in Sources */,
 				6F98944F1EE8E50500A973FC /* AppDelegate.m in Sources */,
 				6F98944C1EE8E50500A973FC /* main.m in Sources */,
+				6FF56FFB20BBAE4F00889003 /* DZRAddViewPageController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

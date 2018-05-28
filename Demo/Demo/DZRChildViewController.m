@@ -6,15 +6,15 @@
 //  Copyright © 2017年 顿顿. All rights reserved.
 //
 
-#import "ChildViewController.h"
+#import "DZRChildViewController.h"
 
-@interface ChildViewController ()
+@interface DZRChildViewController ()
 
 @property (nonatomic, strong) UILabel *label;
 
 @end
 
-@implementation ChildViewController
+@implementation DZRChildViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

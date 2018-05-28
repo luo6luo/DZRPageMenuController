@@ -6,14 +6,14 @@
 //  Copyright © 2017年 顿顿. All rights reserved.
 //
 
-#import "DZRPageController.h"
-#import "ChildViewController.h"
+#import "DZRInheritPageController.h"
+#import "DZRChildViewController.h"
 
-@interface DZRPageController ()
+@interface DZRInheritPageController ()
 
 @end
 
-@implementation DZRPageController
+@implementation DZRInheritPageController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,7 +51,7 @@
 {
     NSMutableArray * controllersArr = [NSMutableArray array];
     for (int i = 0; i < 7; i++) {
-        ChildViewController * childVC = [[ChildViewController alloc] init];
+        DZRChildViewController * childVC = [[DZRChildViewController alloc] init];
         childVC.view.backgroundColor = [UIColor colorWithRed:(arc4random()%255)/255.0 green:(arc4random()%255)/255.0 blue:(arc4random()%255)/255.0 alpha:1.0];
         childVC.text = [NSString stringWithFormat:@"item：%d",i];
         [controllersArr addObject:childVC];

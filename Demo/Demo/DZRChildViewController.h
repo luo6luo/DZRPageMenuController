@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChildViewController : UIViewController
+@interface DZRChildViewController : UIViewController
 
 @property (nonatomic, strong) NSString *text;
 

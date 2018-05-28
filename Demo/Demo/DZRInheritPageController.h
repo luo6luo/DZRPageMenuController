@@ -8,6 +8,6 @@
 
 #import "DZRPageMenuController.h"
 
-@interface DZRPageController : DZRPageMenuController
+@interface DZRInheritPageController : DZRPageMenuController
 
 @end

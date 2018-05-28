@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "DZRPageController.h"
+#import "DZRSelectController.h"
 
 @interface AppDelegate ()
 
@@ -20,7 +20,7 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    DZRPageController *vc = [[DZRPageController alloc] init];
+    DZRSelectController *vc = [[DZRSelectController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     [nav.navigationBar setTranslucent:NO];
     self.window.rootViewController = nav;

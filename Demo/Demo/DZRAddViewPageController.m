@@ -12,6 +12,7 @@
 
 @interface DZRAddViewPageController ()<DZRPageMenuDelegate, DZRPageMenuDataSource>
 
+// addSubview 的方法一定要设置为属性，因为需要强引用一次 DZRPageMenuController，否则加载其加载完子视图后会直接dealloc
 @property (nonatomic, strong) DZRPageMenuController *pageController;
 
 @end

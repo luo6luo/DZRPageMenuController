@@ -6,7 +6,6 @@
 ## 目录  
 * [示例](#示例)
 * [使用条件](#使用条件)
-* [描述](#描述)
 * [安装](#安装)
 * [使用](#使用)
 * [更新日志](#更新日志)
@@ -18,8 +17,6 @@
 
 ### 使用条件
 iOS8.0及以上设备能够使用
-
-### 描述
 
 ### 安装
 1.使用CocoaPods安装，在`Podfile`文件中写入。
@@ -37,22 +34,29 @@ iOS8.0及以上设备能够使用
 2.在需要创建分页控制器的位置,创建`DZRSuperController`
 
 ```objective-c
-// 创建分页控制器
+// 创建分页控制器（默认全屏）
 DZRSuperController *superController = [[DZRPageController alloc] init];
+// 想定制控制器的frame
+// DZRSuperController *superController = [[DZRPageController alloc] initWithFrame: frame];
 
-// 显示superController(此处是举例)
+// 显示superController（此处是举例）
 [self presentViewController: superController animated:YES completion:nil];
 ```
 ##### 二、加载 `DZRPageMenuController.view` 方式使用  
 1、使用`- (instancetype)initWithFrame:(CGRect)frame`方法初始化`pageMenuController`。  
-2、然后将`pageMenuController.view`加载到对应的`supview`上。
+2、然后将`pageMenuController.view`加载到对应的`supview`上。  
+
+```objective-c
+// 添加 DZRPageMenuController 为属性
+@property (nonatomic, strong) DZRPageMenuController *pageController;
+```
 
 ```objective-c
 // 创建分页控制器
-DZRSuperController *pageMenuController = [[DZRPageController alloc] init];
+self.pageMenuController = [[DZRPageController alloc] init];
 
 // 将视图加载到想要加载的视图上
-[self.view addSubview: pageMenuController.view];
+[self.view addSubview: self.pageMenuController.view];
 ```
 
 **注意：** 具体的协议有2个，不管采用哪种方式都需要实现。
